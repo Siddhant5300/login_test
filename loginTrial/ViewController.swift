@@ -65,8 +65,16 @@ class ViewController: UIViewController {
     @IBAction func btnClick(_ sender: Any) {
      
 
+        var bTask = DispatchQueue.global(qos: DispatchQoS.QoSClass.background)
         let workQueue = DispatchQueue.global(qos: DispatchQoS.QoSClass.background)
         workQueue.async {
+            var bTask : UIBackgroundTaskIdentifier = UIBackgroundTaskInvalid
+            bTask = UIApplication.shared.beginBackgroundTask(expirationHandler: {
+                ()-> Void in
+                UIApplication.shared.endBackgroundTask(bTask)
+                bTask = UIBackgroundTaskInvalid
+            })
+            
               if (self.userType == "Professional")
               {
                 let headers : [String:String] = [
